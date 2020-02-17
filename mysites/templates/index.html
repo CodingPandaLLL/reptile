@@ -1,0 +1,153 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>爬虫小网站</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static "bootstrap/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="{% static "bootstrap/html5shiv.min.js" %}"></script>
+      <script src="{% static "bootstrap/respond.min.js" %}"></script>
+    <![endif]-->
+    <link rel='stylesheet' id='stylesheet-css' href='{% static "css/newStyle.css" %}' type='text/css' media='all'/>
+</head>
+<body class="fz">
+<h1 class="webSiteHead">你好，新世界！</h1>
+<div id="main" class="mianStyle">
+    <button type="button" class="btn btn-warning" onclick="reptileArticle()">爬取文章</button>
+    <button type="button" class="btn btn-warning" onclick="reptileImage()">爬取图片</button>
+    <button type="button" class="btn btn-warning" onclick="reptileVideo()">爬取视频</button>
+    <div id="article1" class="article1">
+        <h2>所有文章</h2>
+        <div id="article2" class="article2">
+            <table class="table table-striped">
+                <tr>
+                    <th>序号</th>
+                    <th>文章名</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+                {% for article in articleList %}
+                    <tr>
+                        <td>{{ article.id }}</td>
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.created_time }}</td>
+                        <td><a href="{% url 'index' %}article-{{ article.id }}.html">查看</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="border: 1px solid rgb(153, 153, 153);"></div>
+        </div>
+    </div>
+    <div id="image1" class="image1">
+        <h2>所有图片</h2>
+        <div id="image2" class="image2">
+            <table class="table table-striped">
+                <tr>
+                    <th>序号</th>
+                    <th>图片名</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+
+                </tr>
+                {% for image in imageList %}
+                    <tr>
+                        <td>{{ image.id }}</td>
+                        <td>{{ image.title }}</td>
+                        <td>{{ image.created_time }}</td>
+                        <td><a href="{% url 'index' %}image-{{ image.id }}.html">查看</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="border: 1px solid rgb(153, 153, 153);"></div>
+        </div>
+    </div>
+    <div id="video1" class="video1">
+        <h2>所有视频</h2>
+        <div id="video2" class="video2">
+            <table class="table table-striped">
+                <tr>
+                    <th>序号</th>
+                    <th>视频名</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+                {% for video in videoList %}
+                    <tr>
+                        <td>{{ video.id }}</td>
+                        <td>{{ video.title }}</td>
+                        <td>{{ video.created_time }}</td>
+                        <td><a href="{% url 'index' %}video-{{ video.id }}.html">查看</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="border: 1px solid rgb(153, 153, 153);"></div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="{% static "bootstrap/jquery.min.js" %}"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="{% static "bootstrap/bootstrap.min.js" %}"></script>
+<script>
+    function reptileArticle() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'index' %}ra/",
+            contentType: 'application/json;charset=utf-8', //设置请求头信息
+            data: null,
+            dataType: "text",
+            success: function (res) {
+                alert(res + '，刷新页面可查看数据~')
+            },
+            error: function (result) {
+                alert(result.responseText + '请求失败')
+            }
+        });
+
+    }
+
+        function reptileImage() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'index' %}ri/",
+            contentType: 'application/json;charset=utf-8', //设置请求头信息
+            data: null,
+            dataType: "text",
+            success: function (res) {
+                alert(res + '，刷新页面可查看数据~')
+            },
+            error: function (result) {
+                alert(result.responseText + '请求失败')
+            }
+        });
+
+    }
+
+        function reptileVideo() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'index' %}rv/",
+            contentType: 'application/json;charset=utf-8', //设置请求头信息
+            data: null,
+            dataType: "text",
+            success: function (res) {
+                alert(res + '，刷新页面可查看数据~')
+            },
+            error: function (result) {
+                alert(result.responseText + '请求失败')
+            }
+        });
+
+    }
+</script>
+</html>
